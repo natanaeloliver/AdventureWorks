@@ -1,0 +1,66 @@
+version: 2
+
+sources:
+  - name: erp
+    description: Modelo com as tabelas fonte - raw tables
+    database: fea24_4 
+    schema: raw_adventure_works
+    tables:
+      - name: ADDRESS
+        description: Tabela dos endereços
+      - name: ADDRESSTYPE
+        description: Tabela dos tipos de endereços
+      - name: BUSINESSENTITYADDRESS
+        description: Tabela das entidades de negócio com as chaves dos endereços
+      - name: BUSINESSENTITYCONTACT
+        description: Tabela das entidades de negócio com as chaves das pessoas e dos tipos de contato
+      - name: CONTACTTYPE
+        description: Tabela dos tipos de contatos
+      - name: COUNTRYREGION
+        description: Tabela dos países
+      - name: CREDITCARD
+        description: Tabela dos cartões de crédito
+      - name: CUSTOMER
+        description: Tabela dos clientes
+      - name: EMPLOYEE
+        description: Tabela dos funcionários
+      - name: EMPLOYEEDEPARTMENTHISTORY
+        description: Tabela dos funcionários com as chaves dos departamentos
+      - name: PERSON
+        description: Tabela das pessoas
+      - name: PERSONCREDITCARD
+        description: Tabela dos cartões das pessoas
+      - name: PRODUCT
+        description: Tabela dos produtos
+      - name: PRODUCTCATEGORY
+        description: Tabela das categorias dos produtos
+      - name: PRODUCTSUBCATEGORY
+        description: Tabela das subcategorias dos produtos
+      - name: SALESORDERDETAIL
+        description: Tabela com os itens dos pedidos
+      - name: SALESORDERHEADER
+        description: Tabela dos cabeçalhos dos pedidos
+      - name: SALESORDERHEADERSALESREASON
+        description: Tabela dos pedidos com as chaves dos motivos de venda
+      - name: SALESPERSON
+        description: Tabela dos vendedores
+      - name: SALESREASON
+        description: Tabela dos motivos de venda
+      - name: SALESTERRITORYHISTORY
+        description: Tabela dos endereços da venda dos pedidos
+      - name: SHIFT
+        description: Tabela dos turnos
+      - name: SHIPMETHOD
+        description: Tabela dos métodos de envio
+      - name: SPECIALOFFER
+        description: Tabela das ofertas
+      - name: SPECIALOFFERPRODUCT
+        description: Tabela das ofestas com as chaves dos produtos
+      - name: STATEPROVINCE
+        description: Tabela dos estados
+      - name: STORE
+        description: Tabela das lojas
+      - name: UNITMEASURE
+        description: Tabela das unidades de medida
+      - name: VENDOR
+        description: Tabela das plataformas de venda
