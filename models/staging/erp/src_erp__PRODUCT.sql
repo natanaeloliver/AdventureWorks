@@ -3,8 +3,10 @@ with
         select
             cast(PRODUCTID as int)
                 as PRODUCTID
-            , NAME as nm_produto
-            , PRODUCTNUMBER as cd_produto
+            , cast(NAME as string)
+                as nm_produto
+            , cast(PRODUCTNUMBER as string)
+                as cd_produto
             , MAKEFLAG as sn_fabricado_pela_empresa
             , FINISHEDGOODSFLAG as sn_pode_ser_vendido
             , case
@@ -21,14 +23,15 @@ with
             end as produto_cor
             , case
                 when SIZEUNITMEASURECODE is null and SIZE is null then 'Não se aplica'
-                when SIZEUNITMEASURECODE is null then SIZE
+                when SIZEUNITMEASURECODE is null then cast(SIZE as string)
                 else SIZE||' '||SIZEUNITMEASURECODE
             end as produto_tamanho
             , case
                 when WEIGHT is not null then WEIGHT||' '||WEIGHTUNITMEASURECODE
                 else 'Não se aplica'
             end as produto_peso
-            , DAYSTOMANUFACTURE as produto_dias_fabricacao
+            , cast(DAYSTOMANUFACTURE as int)
+                as produto_dias_fabricacao
             , case
                 when PRODUCTLINE = 'R' then 'Estrada'
                 when PRODUCTLINE = 'M' then 'Montanha'

@@ -3,7 +3,8 @@ with
         select
             cast(CREDITCARDID as int)
                 as CREDITCARDID
-            , CARDTYPE as tp_cartao
+            , cast(CARDTYPE as string)
+                as tp_cartao
         from {{ source('erp', 'CREDITCARD') }}
     )
 select *

@@ -1,7 +1,8 @@
 with
     fonte_unidades as (
         select
-            UNITMEASURECODE
+            cast(UNITMEASURECODE as string)
+                as UNITMEASURECODE
             , cast(NAME as string)
                 as nm_unidade
         from {{ source('erp', 'UNITMEASURE') }}

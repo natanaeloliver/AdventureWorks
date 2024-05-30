@@ -3,7 +3,8 @@ with
         select
             cast(CONTACTTYPEID as int)
                 as CONTACTTYPEID
-            , NAME as tp_contato
+            , cast(NAME as string)
+                as tp_contato
         from {{ source('erp', 'CONTACTTYPE') }}
     )
 select *

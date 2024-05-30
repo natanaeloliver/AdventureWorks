@@ -3,7 +3,8 @@ with
         select
             cast(BUSINESSENTITYID as int)
                 as BUSINESSENTITYID
-            , JOBTITLE as funcionario_cargo
+            , cast(JOBTITLE as string)
+                as funcionario_cargo
             , cast(BIRTHDATE as date)
                 as dt_nascimento_funcionario
             , case
