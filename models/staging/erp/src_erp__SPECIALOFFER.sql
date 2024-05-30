@@ -3,11 +3,14 @@ with
         select
             cast(SPECIALOFFERID as int)
                 as SPECIALOFFERID
-            , DESCRIPTION as ds_oferta
+            , cast(DESCRIPTION as string)
+                as ds_oferta
             , cast(DISCOUNTPCT as numeric(18,2))
                 as desconto_perc
-            , TYPE as tp_oferta
-            , CATEGORY as categoria_oferta
+            , cast(TYPE as string)
+                as tp_oferta
+            , cast(CATEGORY as string)
+                as categoria_oferta
             , cast(STARTDATE as date)
                 as dt_oferta_inicial
             , cast(ENDDATE as date)

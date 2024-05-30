@@ -3,7 +3,8 @@ with
         select
             cast(SHIPMETHODID as int)
                 as SHIPMETHODID
-            , NAME as nm_transportadora
+            , cast(NAME as string)
+                as nm_transportadora
             , cast(SHIPBASE as numeric(18,2))
                 as frete_base
             , cast(SHIPRATE as numeric(18,2))

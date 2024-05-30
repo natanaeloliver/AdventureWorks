@@ -3,10 +3,13 @@ with
         select
             cast(STATEPROVINCEID as int)
                 as STATEPROVINCEID
-            , STATEPROVINCECODE as cd_estado
-            , COUNTRYREGIONCODE
+            , cast(STATEPROVINCECODE as string)
+                as cd_estado
+            , cast(COUNTRYREGIONCODE as string)
+                as COUNTRYREGIONCODE
             , ISONLYSTATEPROVINCEFLAG as sn_pais_sem_estado
-            , NAME as nm_estado
+            , cast(NAME as string)
+                as nm_estado
             , cast(TERRITORYID as int)
                 as TERRITORYID
         from {{ source('erp', 'STATEPROVINCE') }}

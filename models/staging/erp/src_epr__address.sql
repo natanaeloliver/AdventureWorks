@@ -3,7 +3,8 @@ with
         select
             cast(ADDRESSID as int)
                 as ADDRESSID
-            , CITY as cidade
+            , cast(CITY as string)
+                as cidade
             , cast(STATEPROVINCEID as int)
                 as STATEPROVINCEID
         from {{ source('erp', 'ADDRESS') }}

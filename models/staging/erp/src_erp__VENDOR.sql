@@ -12,7 +12,8 @@ with
                 when CREDITRATING = 4 then 'Médio'
                 when CREDITRATING = 5 then 'Abaixo da média'
             end as classificacao_credito
-            , CREDITRATING as cd_classificacao_credito
+            , cast(CREDITRATING as int)
+                as cd_classificacao_credito
             , PREFERREDVENDORSTATUS as sn_tem_preferencia
             , ACTIVEFLAG as sn_ativo
         from {{ source('erp', 'VENDOR') }}
