@@ -22,6 +22,8 @@ sources:
         description: Tabela dos cartões de crédito
       - name: CUSTOMER
         description: Tabela dos clientes
+      - name: DEPARTMENT
+        description: Tabela dos setores dos funcionários
       - name: EMPLOYEE
         description: Tabela dos funcionários
       - name: EMPLOYEEDEPARTMENTHISTORY
@@ -34,6 +36,8 @@ sources:
         description: Tabela dos produtos
       - name: PRODUCTCATEGORY
         description: Tabela das categorias dos produtos
+      - name: PRODUCTMODEL
+        description: Tabela com os modelos dos produtos
       - name: PRODUCTSUBCATEGORY
         description: Tabela das subcategorias dos produtos
       - name: SALESORDERDETAIL
@@ -47,7 +51,7 @@ sources:
       - name: SALESREASON
         description: Tabela dos motivos de venda
       - name: SALESTERRITORYHISTORY
-        description: Tabela dos endereços da venda dos pedidos
+        description: Tabela dos endereços da venda dos pedidos ao longo do tempo
       - name: SHIFT
         description: Tabela dos turnos
       - name: SHIPMETHOD

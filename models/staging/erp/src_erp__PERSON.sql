@@ -18,7 +18,7 @@ with
                 when PERSONTYPE = 'EM' then 4
                 when PERSONTYPE = 'VC' then 5
                 when PERSONTYPE = 'GC' then 6
-            end as tp_pessoa_id
+            end as cd_tp_pessoa
             , case 
                 when MIDDLENAME is not null then 
                     cast(FIRSTNAME as string)||' '||cast(MIDDLENAME as string)||' '||cast(LASTNAME as string)

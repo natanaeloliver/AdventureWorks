@@ -7,7 +7,7 @@ with
                 when NAME = 'Day'       then 'Matutino'
                 when NAME = 'Evening'   then 'Vespertino'
                 when NAME = 'Night'     then 'Noturno'
-            end as turnos
+            end as ds_turno
         from {{ source('erp', 'SHIFT') }}
     )
 select *
