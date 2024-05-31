@@ -5,7 +5,7 @@ with
                 as PRODUCTSUBCATEGORYID
             , cast(PRODUCTCATEGORYID as int)
                 as PRODUCTCATEGORYID
-            , NAME as produto_subcategoria
+            , NAME as nm_subcategoria_produto
         from {{ source('erp', 'PRODUCTSUBCATEGORY') }}
     )
 select *

@@ -6,7 +6,7 @@ with
             , cast(NAME as string)
                 as ds_motivo_venda
             , cast(REASONTYPE as string)
-                as to_motivo_venda
+                as tp_motivo_venda
         from {{ source('erp', 'SALESREASON') }}
     )
 select *

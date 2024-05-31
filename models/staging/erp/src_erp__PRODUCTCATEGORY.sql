@@ -8,7 +8,7 @@ with
                 when NAME = 'Components'    then 'Componentes'
                 when NAME = 'Clothing'      then 'Roupas'
                 when NAME = 'Accessories'   then 'Acessórios'
-            end as nm_categoria_produtos
+            end as nm_categoria_produto
         from {{ source('erp', 'PRODUCTCATEGORY') }}
     )
 select *

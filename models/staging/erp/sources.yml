@@ -36,6 +36,8 @@ sources:
         description: Tabela dos produtos
       - name: PRODUCTCATEGORY
         description: Tabela das categorias dos produtos
+      - name: PRODUCTMODEL
+        description: Tabela com os modelos dos produtos
       - name: PRODUCTSUBCATEGORY
         description: Tabela das subcategorias dos produtos
       - name: SALESORDERDETAIL
