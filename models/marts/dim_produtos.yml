@@ -1,0 +1,47 @@
+version: 2
+models:
+  - name: dim_produtos
+    description: >
+      Tabela dimensão dos produtos da Adventure Works.
+    columns:
+      - name: PK_CLIENTE
+        description: Chave primária da dimensão de clientes.
+        tests:
+          - unique
+          - not_null
+      - name: CD_PRODUTO_NUM
+        description: Código numérico do produto
+      - name: CD_PRODUTO_CATEGORIA
+        description: Código da categoria do produto
+      - name: CD_PRODUTO_SUBCATEGORIA
+        description: Código do subcategoria do produto
+      - name: CD_PRODUTO_MODELO
+        description: Código do modelo do produto
+      - name: CD_PRODUTO
+        description: Código do produto (alphanumérico)
+      - name: NM_CATEGORIA_PRODUTO
+        description: Nome da categoria do produto
+      - name: NM_SUBCATEGORIA_PRODUTO
+        description: Nome da subcategoria do produto
+      - name: LINHA_DO_PRODUTO
+        description: Linha do produto
+      - name: NM_MODELO
+        description: Nome do modelo do produto
+      - name: NM_PRODUTO
+        description: Nome do produto
+      - name: DESCRICAO
+        description: Descrição do produto
+      - name: PRODUTO_COR
+        description: Cor do produto
+      - name: PRODUTO_TAMANHO
+        description: Tamanho do produto
+      - name: PRODUTO_PESO
+        description: Peso do produto
+      - name: PRODUTO_DIAS_FABRICACAO
+        description: Dias necessários para fabricar o produto
+      - name: PRODUTO_ESTILO
+        description: Estilo do produto
+      - name: SN_PODE_SER_VENDIDO
+        description: Identifica se o produto pode ser vendido ou não
+      - name: SN_FABRICADO_PELA_EMPRESA
+        description: Identifica se o produto é fabricado pela empresa
