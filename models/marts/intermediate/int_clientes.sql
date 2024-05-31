@@ -33,7 +33,6 @@ with
     , cliente_pessoa as (
         select
             src_erp__CUSTOMER.CUSTOMERID
-            , src_erp__CUSTOMER.TERRITORYID
             , src_erp__CUSTOMER.STOREID    
             , src_erp__CUSTOMER.PERSONID    
             , 'Individual (varejo)'
@@ -46,7 +45,7 @@ with
             , null
                 as nm_vendedor_atribuido
             , src_erp__PERSON.TP_PESSOA
-            , src_erp__PERSON.TP_PESSOA_ID
+            , src_erp__PERSON.CD_TP_PESSOA
             , src_erp__PERSON.NM_PESSOA
             , null
                 as TP_CONTATO
@@ -62,7 +61,6 @@ with
     , cliente_loja as (
         select
             src_erp__CUSTOMER.CUSTOMERID
-            , src_erp__CUSTOMER.TERRITORYID
             , src_erp__CUSTOMER.STOREID
             , src_erp__BUSINESSENTITYCONTACT.PERSONID
             , 'Empresarial (loja)'
@@ -74,7 +72,7 @@ with
             , src_erp__PERSON_vendedor.nm_pessoa
                 as nm_vendedor_atribuido
             , src_erp__PERSON.TP_PESSOA
-            , src_erp__PERSON.TP_PESSOA_ID
+            , src_erp__PERSON.CD_TP_PESSOA
             , src_erp__PERSON.NM_PESSOA
             , src_erp__CONTACTTYPE.TP_CONTATO
             , src_erp__BUSINESSENTITYADDRESS.ADDRESSID
@@ -97,7 +95,6 @@ with
     , cliente_loja_pessoa as (
         select
             src_erp__CUSTOMER.CUSTOMERID
-            , src_erp__CUSTOMER.TERRITORYID
             , src_erp__CUSTOMER.STOREID
             , src_erp__CUSTOMER.PERSONID
             , 'Empresarial (Pessoa)'
@@ -109,7 +106,7 @@ with
             , src_erp__PERSON_vendedor.nm_pessoa
                 as nm_vendedor_atribuido
             , src_erp__PERSON.TP_PESSOA
-            , src_erp__PERSON.TP_PESSOA_ID
+            , src_erp__PERSON.CD_TP_PESSOA
             , src_erp__PERSON.NM_PESSOA
             , src_erp__CONTACTTYPE.TP_CONTATO
             , src_erp__BUSINESSENTITYADDRESS.ADDRESSID 
@@ -144,30 +141,28 @@ with
         select
             hash(CUSTOMERID)
                 as pk_cliente
-            , hash(TERRITORYID)
-                as fk_territorio
             , hash(ADDRESSID)
                 as fk_endereco
             , CUSTOMERID
                 as cd_cliente
-            , TERRITORYID
-                as cd_territorio
             , ADDRESSID
                 as cd_endereco
             , STOREID
                 as cd_loja
             , PERSONID
                 as cd_pessoa
-            , TP_PESSOA_ID
-                as cd_tp_pessoa
+            , CD_TP_PESSOA
             , BUSINESSENTITYID
                 as cd_entidade_negocio
             , CD_VENDEDOR_ATRIBUIDO
             , NM_VENDEDOR_ATRIBUIDO
             , NM_LOJA
+                as nm_cliente_loja
             , TP_CLIENTE
             , NM_PESSOA
+                as nm_cliente_pessoa
             , TP_PESSOA
+                as tp_pessoa_cliente
             , TP_CONTATO
         from uniao_tabelas
     )

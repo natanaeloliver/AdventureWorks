@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: web
+    description: Modelo com as tabelas da web
+    database: fea24_4 
+    schema: DBT_NDAROSA_AW
+    tables:
+      - name: WORLDCITIES
+        description: Tabela das cidades do mundo (fonte https://simplemaps.com/data/world-cities)
+      - name: CIDADES_FALTANTES
+        description: Tabela das cidades do mundo faltantes (ChatGBT)
