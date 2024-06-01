@@ -1,0 +1,153 @@
+version: 2
+models:
+  - name: fact_pedidos_itens
+    description: Tabela fato com os itens dos pedidos da Adventure Works.
+    columns:
+      - name: PK_ITEM_PEDIDO
+        description: Chave primária da fato dos itens dos pedidos.
+        tests:
+          - unique
+          - not_null
+
+      - name: FK_CLIENTE
+        description: Chave estrangeira da dimensão dos clientes
+        tests:
+          - not_null
+          - relationships:
+              field: PK_CLIENTE
+              to: ref('dim_clientes')
+
+      - name: FK_ENDERECO
+        description: Chave estrangeira da dimensão dos endereços
+        tests:
+          - not_null
+          - relationships:
+              field: PK_ENDERECO
+              to: ref('dim_enderecos')
+
+      - name: FK_PEDIDO
+        description: Chave estrangeira da fato dos pedidos
+        tests:
+          - not_null
+          - relationships:
+              field: PK_PEDIDO
+              to: ref('fact_pedidos')
+
+      - name: FK_CARTAO
+        description: Chave estrangeira da dimensão dos cartões
+        tests:
+          - not_null
+
+      - name: FK_VENDEDOR
+        description: Chave estrangeira da dimensão dos
+        tests:
+          - relationships:
+              field: PK_VENDEDOR
+              to: ref('dim_vendedores')
+
+      - name: FK_PRODUTO
+        description: Chave estrangeira da dimensão dos
+        tests:
+          - not_null
+          - relationships:
+              field: FK_PRODUTO
+              to: ref('dim_PRODUTO')
+
+      - name: CD_TERRITORIO
+        description: Código do território
+
+      - name: CD_TRANSPORTADORA
+        description: Código da transportadora
+
+      - name: CD_CLIENTE
+        description: Código do cliente
+
+      - name: CD_ENDERECO
+        description: Código do endereço de entrega
+
+      - name: CD_VENDEDOR
+        description: Código do vendedor
+
+      - name: CD_OFERTA
+        description: Código da oferta
+
+      - name: CD_CARTAO
+        description: Código do registro do cartão na empresa
+
+      - name: CD_PEDIDO
+        description: Código do pedido
+
+      - name: CD_ITEM_PEDIDO
+        description: Código do item do pedido
+
+      - name: CHAVE_PESSOA_ENDERECO
+        description: Chave da pessoa com o seu respectivo endereço
+
+      - name: NUMERO_REVISAO
+        description: Número da revisão do pedido
+
+      - name: TP_PEDIDO
+        description: Tipo de pedido
+
+      - name: DT_PEDIDO
+        description: Data do pedido
+
+      - name: STATUS_PEDIDO
+        description: Situação do pedido
+
+      - name: CD_PRODUTO_NUM
+        description: Código numérico do produto
+
+      - name: PRECO_UNITARIO
+        description: Preço unitário do produto
+
+      - name: QTD_PRODUTO
+        description: Quantidade do item (produto) do pedido
+
+      - name: DESCONTO_PERC
+        description: Desconto percentual do item do pedido
+
+      - name: NM_TRANSPORTADORA
+        description: Nome da transportadora
+
+      - name: TP_OFERTA
+        description: Tipo de oferta
+
+      - name: DS_OFERTA
+        description: Descrição da oferta
+
+      - name: CATEGORIA_OFERTA
+        description: Categoria da oferta
+
+      - name: CHECK_SUBTOTAL_DISTRIBUIDO
+        description: Valor para a conferência do valor total do pedido vindo apenas do preço dos itens, distribuído pela quantidade de itens do pedido
+
+      - name: TAXAS_DISTRIBUIDAS
+        description: Taxas do pedido distribuídas pela quantidade de itens do pedido
+
+      - name: TAXA_FRETE
+        description: Taxa do frete da transportadora
+
+      - name: CHECK_FRETE
+        description: Frete do pedido distribuído pela quantidade de itens do pedido
+
+      - name: FRETE_BASE_DISTRIBUIDO
+        description: Valor base do frete da transportadora distribuído pela quantidade de itens do pedido
+
+      - name: CHECK_TOTAL_PEDIDO_DISTRIBUIDO
+        description: Valor para a conferência do valor total do pedido distribuído pela quantidade de itens do pedido
+
+      - name: DESCONTO_PERC_OFERTA
+        description: Desconto percentual da oferta
+
+      - name: DT_OFERTA_INICIAL
+        description: Data do início da oferta
+
+      - name: DT_OFERTA_FINAL
+        description: Data do fim da oferta
+
+      - name: QTD_MIN_OFERTA_DISTRIBUIDA
+        description: Quantidade mínima para poder utilizar a oferta, distribuída pela quantidade de itens do pedido
+
+      - name: QTD_MAX_OFERTA_DISTRIBUIDA
+        description: Quantidade máxima para poder utilizar a oferta, distribuída pela quantidade de itens do pedido

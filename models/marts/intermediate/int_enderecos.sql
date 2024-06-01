@@ -66,6 +66,7 @@ with
             , src_erp__STATEPROVINCE.TERRITORYID
             , src_erp__COUNTRYREGION.NM_PAIS
             , src_erp__BUSINESSENTITYADDRESS.ADDRESSTYPEID
+            , src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
             , src_erp__ADDRESSTYPE.TP_ENDERECO
         from src_epr__ADDRESS
         left join src_erp__STATEPROVINCE
@@ -80,8 +81,10 @@ with
 
     , chaves as (
         select
-            hash(ADDRESSID)
+            hash(concat(BUSINESSENTITYID,'|',ADDRESSID))
                 as pk_endereco
+            , hash(BUSINESSENTITYID)
+                as fk_pessoa
             , COUNTRYREGIONCODE
                 as cd_pais
             , CD_ESTADO
@@ -93,6 +96,10 @@ with
                 as cd_tp_endereco
             , ADDRESSID
                 as cd_endereco
+            , BUSINESSENTITYID
+                as cd_pessoa
+            , concat(BUSINESSENTITYID,'|',ADDRESSID)
+                AS chave_pessoa_endereco
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
@@ -104,12 +111,15 @@ with
     , tabela_com_lat_lng as (
         select
             chaves.PK_ENDERECO
+            , chaves.FK_PESSOA
             , chaves.CD_PAIS
             , chaves.CD_ESTADO
             , chaves.CD_TERRITORIO
             , chaves.CD_CIDADE
             , chaves.CD_TP_ENDERECO
             , chaves.CD_ENDERECO
+            , chaves.CD_PESSOA
+            , chaves.CHAVE_PESSOA_ENDERECO
             , chaves.NM_PAIS
             , chaves.NM_ESTADO
             , chaves.CIDADE
@@ -126,4 +136,3 @@ with
 
 select *
 from tabela_com_lat_lng
-

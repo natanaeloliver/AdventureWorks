@@ -9,26 +9,15 @@ with
         from {{ ref('src_erp__PERSON') }}
     )
 
-    , src_erp__BUSINESSENTITYADDRESS as (
-        select *
-        from {{ ref('src_erp__BUSINESSENTITYADDRESS') }}
-    )
-
     , src_erp__STORE as (
         select *
         from {{ ref('src_erp__STORE') }}
-    )
-
-    , src_erp__BUSINESSENTITYCONTACT as (
-        select *
-        from {{ ref('src_erp__BUSINESSENTITYCONTACT') }}
     )
 
     , src_erp__CONTACTTYPE as (
         select *
         from {{ ref('src_erp__CONTACTTYPE') }}
     )
-
 
     , cliente_pessoa as (
         select
@@ -49,12 +38,9 @@ with
             , src_erp__PERSON.NM_PESSOA
             , null
                 as TP_CONTATO
-            , src_erp__BUSINESSENTITYADDRESS.ADDRESSID
         from src_erp__CUSTOMER
         inner join src_erp__PERSON
         on src_erp__CUSTOMER.PERSONID = src_erp__PERSON.BUSINESSENTITYID
-        inner join src_erp__BUSINESSENTITYADDRESS
-        on src_erp__PERSON.BUSINESSENTITYID = src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
 
     )
 
@@ -75,7 +61,6 @@ with
             , src_erp__PERSON.CD_TP_PESSOA
             , src_erp__PERSON.NM_PESSOA
             , src_erp__CONTACTTYPE.TP_CONTATO
-            , src_erp__BUSINESSENTITYADDRESS.ADDRESSID
         from src_erp__CUSTOMER
         inner join src_erp__STORE
         on src_erp__CUSTOMER.STOREID = src_erp__STORE.BUSINESSENTITYID
@@ -85,8 +70,6 @@ with
         on src_erp__BUSINESSENTITYCONTACT.PERSONID = src_erp__PERSON.BUSINESSENTITYID
         inner join src_erp__CONTACTTYPE
         on src_erp__BUSINESSENTITYCONTACT.CONTACTTYPEID = src_erp__CONTACTTYPE.CONTACTTYPEID
-        inner join src_erp__BUSINESSENTITYADDRESS
-        on src_erp__CUSTOMER.STOREID = src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
         left join src_erp__PERSON as src_erp__PERSON_vendedor
         on src_erp__STORE.SALESPERSONID = src_erp__PERSON_vendedor.BUSINESSENTITYID
         where src_erp__CUSTOMER.PERSONID is null
@@ -109,7 +92,6 @@ with
             , src_erp__PERSON.CD_TP_PESSOA
             , src_erp__PERSON.NM_PESSOA
             , src_erp__CONTACTTYPE.TP_CONTATO
-            , src_erp__BUSINESSENTITYADDRESS.ADDRESSID 
         from src_erp__CUSTOMER
         inner join src_erp__STORE
         on src_erp__CUSTOMER.STOREID = src_erp__STORE.BUSINESSENTITYID
@@ -119,8 +101,6 @@ with
         on src_erp__CUSTOMER.PERSONID = src_erp__PERSON.BUSINESSENTITYID
         inner join src_erp__CONTACTTYPE
         on src_erp__BUSINESSENTITYCONTACT.CONTACTTYPEID = src_erp__CONTACTTYPE.CONTACTTYPEID
-        inner join src_erp__BUSINESSENTITYADDRESS
-        on src_erp__CUSTOMER.STOREID = src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
         left join src_erp__PERSON as src_erp__PERSON_vendedor
         on src_erp__STORE.SALESPERSONID = src_erp__PERSON_vendedor.BUSINESSENTITYID
         where src_erp__CUSTOMER.PERSONID is not null
@@ -141,12 +121,8 @@ with
         select
             hash(CUSTOMERID)
                 as pk_cliente
-            , hash(ADDRESSID)
-                as fk_endereco
             , CUSTOMERID
                 as cd_cliente
-            , ADDRESSID
-                as cd_endereco
             , STOREID
                 as cd_loja
             , PERSONID

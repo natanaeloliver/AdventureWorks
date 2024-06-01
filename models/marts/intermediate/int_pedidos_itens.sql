@@ -24,16 +24,6 @@ with
         from {{ ref('src_erp__SHIPMETHOD') }}
     )
 
-    , int_clientes as (
-        select 
-                pk_cliente
-                    as fk_cliente
-                , fk_endereco
-                , cd_cliente
-                , cd_endereco
-        from {{ ref('int_clientes') }}
-    )
-
     , tabela_qtd_itens_pedido as (
         select distinct
             SALESORDERID
@@ -73,6 +63,7 @@ with
             , src_erp__SALESORDERHEADER.SALESPERSONID
             , src_erp__SALESORDERHEADER.TERRITORYID
             , src_erp__SALESORDERHEADER.SHIPMETHODID
+            , src_erp__SALESORDERHEADER.ADDRESSID
             , src_erp__SALESORDERHEADER.CREDITCARDID
             , src_erp__SALESORDERHEADER.CHECK_SUBTOTAL
             , src_erp__SALESORDERHEADER.TAXAS
@@ -90,9 +81,6 @@ with
             , src_erp__SHIPMETHOD.NM_TRANSPORTADORA
             , src_erp__SHIPMETHOD.FRETE_BASE
             , src_erp__SHIPMETHOD.TAXA_FRETE
-            , int_clientes.fk_cliente
-            , int_clientes.fk_endereco
-            , int_clientes.cd_endereco
             , tabela_qtd_itens_pedido.qtd_itens_pedido
         from chave_oferta_item_pedido
         left join src_erp__SALESORDERHEADER
@@ -113,8 +101,10 @@ with
         select
             hash(SALESORDERDETAILID)
                 as pk_item_pedido
-            , FK_CLIENTE
-            , FK_ENDERECO
+            , hash(CUSTOMERID)
+                as fk_cliente
+            , hash(concat(CUSTOMERID,'|',ADDRESSID))
+                as fk_endereco
             , hash(SALESORDERID)
                 as fk_pedido
             , hash(CREDITCARDID)
@@ -129,7 +119,10 @@ with
                 as cd_transportadora
             , CUSTOMERID
                 as cd_cliente
-            , CD_ENDERECO
+            , ADDRESSID
+                as cd_endereco
+            , concat(CUSTOMERID,'|',ADDRESSID)
+                as chave_pessoa_endereco
             , SALESPERSONID
                 as cd_vendedor
             , SPECIALOFFERID
@@ -146,6 +139,7 @@ with
             , DT_PEDIDO
             , STATUS_PEDIDO
             , PRODUCTID
+                as cd_produto_num
             , PRECO_UNITARIO
             , QTD_PRODUTO
             , DESCONTO_PERC

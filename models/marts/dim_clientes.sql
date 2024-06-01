@@ -7,9 +7,7 @@ with
     , tabela as (
         select
             PK_CLIENTE
-            , FK_ENDERECO
             , CD_CLIENTE
-            , CD_ENDERECO
             , CD_LOJA
             , CD_PESSOA
             , CD_TP_PESSOA

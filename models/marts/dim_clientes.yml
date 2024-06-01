@@ -1,44 +1,46 @@
 version: 2
 models:
   - name: dim_clientes
-    description: >
-      Tabela dimensão dos clientes da Adventure Works.
+    description: Tabela dimensão dos clientes da Adventure Works.
     columns:
       - name: PK_CLIENTE
         description: Chave primária da dimensão de clientes.
         tests:
           - unique
           - not_null
-      - name: FK_ENDERECO
-        description: Chave estrangeira do endereço do cliente
-        tests:
-          - not_null
-          - relationships:
-              to: ref('int_enderecos')
-              field: PK_ENDERECO
+
       - name: CD_CLIENTE
         description: Código do cliente
-      - name: CD_ENDERECO
-        description: Código do endereço do cliente
+
       - name: CD_LOJA
         description: Código da loja
+
       - name: CD_PESSOA
         description: Código da pessoa
+
       - name: CD_TP_PESSOA
         description: Código do tipo de pessoa
+
       - name: CD_ENTIDADE_NEGOCIO
         description: Código da entidade de negócio
+
       - name: CD_VENDEDOR_ATRIBUIDO
         description: Código do vendedor atribuído ao cliente
+
       - name: NM_VENDEDOR_ATRIBUIDO
         description: Nome do vendedor atribuído ao cliente
+
       - name: NM_CLIENTE_LOJA
         description: Nome da loja
+
       - name: TP_CLIENTE
         description: Tipo de cliente
+
       - name: NM_CLIENTE_PESSOA
         description: Nome do cliente (pessoa vinculada a loja)
+
       - name: TP_PESSOA_CLIENTE
         description: Tipo da pessoa vinculada a loja
+
       - name: TP_CONTATO
         description: Tipo do contato

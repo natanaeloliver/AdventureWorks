@@ -29,6 +29,8 @@ with
                 as SHIPMETHODID
             , cast(CREDITCARDID as int)
                 as CREDITCARDID
+            , cast(SHIPTOADDRESSID as int)
+                as ADDRESSID
             , cast(SUBTOTAL as numeric(18,2))
                 as check_subtotal
             , cast(TAXAMT as numeric(18,2))

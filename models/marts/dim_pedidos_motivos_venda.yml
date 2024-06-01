@@ -1,0 +1,34 @@
+version: 2
+models:
+  - name: dim_pedidos_motivos_venda
+    description: Tabela da dimensão dos pedidos e seus motivos de venda
+    columns:
+      - name: PK_PEDIDO_MOTIVO_VENDA
+        description: Chave primária dos pedidos e seus motivos de venda
+        tests:
+          - unique
+          - not_null
+  
+      - name: FK_PEDIDO
+        description: Chave estrangeira dos pedidos
+        tests:
+          - not_null
+          - relationships:
+              field: PK_PEDIDO
+              to: ref('fact_pedido')
+  
+      - name: CHAVE_PEDIDO_MOTIVO_VENDA
+        description: Chave com os códigos do pedido e do motivo de venda
+  
+      - name: CD_PEDIDO
+        description: Código do pedido
+  
+      - name: CD_MOTIVO_VENDA
+        description: Código do motivo de venda
+  
+      - name: DS_MOTIVO_VENDA
+        description: Descrição do motivo de venda
+  
+      - name: TP_MOTIVO_VENDA
+        description: Tipo do motivo de venda
+  

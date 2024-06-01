@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: dim_cartoes
+    description: Tabela dimensão dos clientes da Adventure Works.
+    columns:
+      - name: PK_CARTAO
+        description: Chave primária da dimensão de clientes.
+        tests:
+          - unique
+          - not_null
+      
+      - name: CD_CARTAO
+        description: Código do cartão no sistema
+      
+      - name: NM_CARTAO
+        description: Nome da bandeira do cartão
+      
+      - name: CD_PESSOA_CARTAO
+        description: Código do portador (pessoa) do cartão
+      
+      - name: TP_PESSOA_CARTAO
+        description: Código tipo de portador (pessoa) do cartão
+      
+      - name: CD_TP_PESSOA_CARTAO
+        description: Código do tipo de portador (pessoa) do cartão
+      
+      - name: NM_PESSOA_CARTAO
+        description: Nome da pessoa portadora do cartão
+      

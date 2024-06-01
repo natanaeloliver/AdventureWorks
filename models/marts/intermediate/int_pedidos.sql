@@ -9,16 +9,6 @@ with
         from {{ ref('src_erp__SHIPMETHOD') }}
     )
 
-    , int_clientes as (
-        select 
-                pk_cliente
-                    as fk_cliente
-                , fk_endereco
-                , cd_cliente
-                , cd_endereco
-        from {{ ref('int_clientes') }}
-    )
-
     , uniao_tabelas as (
         select
             src_erp__SALESORDERHEADER.SALESORDERID
@@ -30,6 +20,7 @@ with
             , src_erp__SALESORDERHEADER.SALESPERSONID
             , src_erp__SALESORDERHEADER.TERRITORYID
             , src_erp__SALESORDERHEADER.SHIPMETHODID
+            , src_erp__SALESORDERHEADER.ADDRESSID
             , src_erp__SALESORDERHEADER.CREDITCARDID
             , src_erp__SALESORDERHEADER.CHECK_SUBTOTAL
             , src_erp__SALESORDERHEADER.TAXAS
@@ -38,22 +29,20 @@ with
             , src_erp__SHIPMETHOD.NM_TRANSPORTADORA
             , src_erp__SHIPMETHOD.FRETE_BASE
             , src_erp__SHIPMETHOD.TAXA_FRETE
-            , int_clientes.fk_cliente
-            , int_clientes.fk_endereco
-            , int_clientes.cd_endereco
         from src_erp__SALESORDERHEADER
         left join src_erp__SHIPMETHOD
         on src_erp__SALESORDERHEADER.SHIPMETHODID = src_erp__SHIPMETHOD.SHIPMETHODID 
-        left join int_clientes
-        on src_erp__SALESORDERHEADER.CUSTOMERID = int_clientes.cd_cliente
+
     )
 
     , chaves as (
         select
             hash(SALESORDERID)
-                as pk_pedidos
-            , FK_CLIENTE
-            , FK_ENDERECO
+                as pk_pedido
+            , hash(CUSTOMERID)
+                as fk_cliente
+            , hash(concat(CUSTOMERID,'|',ADDRESSID))
+                as fk_endereco
             , hash(CREDITCARDID)
                 as fk_cartao
             , hash(SALESPERSONID)
@@ -64,7 +53,12 @@ with
                 as cd_transportadora
             , CUSTOMERID
                 as cd_cliente
-            , CD_ENDERECO
+            , ADDRESSID
+                as cd_endereco
+            , concat(CUSTOMERID,'|',ADDRESSID)
+                as chave_pessoa_endereco
+            , CREDITCARDID
+                as cd_cartao
             , SALESPERSONID
                 as cd_vendedor
             , SALESORDERID

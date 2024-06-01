@@ -79,7 +79,7 @@ with
             hash(BUSINESSENTITYID) as pk_vendedor
             , BUSINESSENTITYID as cd_entidade_negocio
             , DEPARTMENTID as cd_departamento
-            , CD_TP_PESSOA as to_pessoa_vendedor
+            , CD_TP_PESSOA as cd_tp_pessoa_vendedor
             , SHIFTID as cd_turno
             , NM_GRUPO_DEPARTAMENTO
             , NM_DEPARTAMENTO
