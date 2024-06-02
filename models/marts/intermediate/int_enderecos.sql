@@ -34,13 +34,12 @@ with
         from {{ ref('src_web__CIDADES_FALTANTES') }}
     )
 
-    , chave_cidades_web as (
+     , chave_cidades_web as (
         select
             concat(upper(ISO2),'|',upper(translate(CIDADE_ASCII,'áéíóúâêôãõüçàèìòù','aeiouaeoaoucaeiou'))) as cd_cidade
             , LATITUDE
             , LONGITUDE
             , TP_CIDADE
-            , POPULATION
         from src_web__WORLDCITIES
         union all
         select
@@ -51,7 +50,6 @@ with
                 when CIDADE = 'QUEBEC' then 'Capital do país'
                 else 'Cidade'
             end as TP_CIDADE
-            , null POPULATION
         from src_web__CIDADES_FALTANTES
     )
 
@@ -81,7 +79,7 @@ with
 
     , chaves as (
         select
-            hash(concat(BUSINESSENTITYID,'|',ADDRESSID))
+            hash(ADDRESSID)
                 as pk_endereco
             , hash(BUSINESSENTITYID)
                 as fk_pessoa
@@ -98,8 +96,6 @@ with
                 as cd_endereco
             , BUSINESSENTITYID
                 as cd_pessoa
-            , concat(BUSINESSENTITYID,'|',ADDRESSID)
-                AS chave_pessoa_endereco
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
@@ -119,7 +115,6 @@ with
             , chaves.CD_TP_ENDERECO
             , chaves.CD_ENDERECO
             , chaves.CD_PESSOA
-            , chaves.CHAVE_PESSOA_ENDERECO
             , chaves.NM_PAIS
             , chaves.NM_ESTADO
             , chaves.CIDADE
@@ -128,7 +123,6 @@ with
             , chave_cidades_web.LATITUDE
             , chave_cidades_web.LONGITUDE
             , chave_cidades_web.TP_CIDADE
-            , chave_cidades_web.POPULATION
         from chaves
         left join chave_cidades_web
         on chaves.cd_cidade = chave_cidades_web.cd_cidade

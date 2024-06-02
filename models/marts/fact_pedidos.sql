@@ -14,11 +14,7 @@ with
             , CD_TERRITORIO
             , CD_TRANSPORTADORA
             , CD_CLIENTE
-            , CD_PESSOA
-            , CD_VENDEDOR_ATRIBUIDO
             , CD_ENDERECO
-            , CHAVE_CLIENTE_CARTAO
-            , CHAVE_PESSOA_ENDERECO
             , CD_CARTAO
             , CD_VENDEDOR
             , CD_PEDIDO

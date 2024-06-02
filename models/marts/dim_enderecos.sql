@@ -15,7 +15,6 @@ with
             , CD_TP_ENDERECO
             , CD_ENDERECO
             , CD_PESSOA
-            , CHAVE_PESSOA_ENDERECO
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
@@ -24,7 +23,6 @@ with
             , LATITUDE
             , LONGITUDE
             , TP_CIDADE
-            , POPULATION
         from int_enderecos
     )
 

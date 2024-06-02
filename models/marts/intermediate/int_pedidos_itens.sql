@@ -24,21 +24,6 @@ with
         from {{ ref('src_erp__SHIPMETHOD') }}
     )
 
-    , int_clientes as (
-        select *
-        from {{ ref('int_clientes') }}
-    )
-
-    , pedidos_chave_cliente as (
-        select
-            src_erp__SALESORDERHEADER.*
-            , case
-                when CREDITCARDID is null then concat(CUSTOMERID,'|0')
-                else concat(CUSTOMERID,'|',CREDITCARDID)
-            end as chave_cliente_cartao
-        from src_erp__SALESORDERHEADER
-    )
-
     , tabela_qtd_itens_pedido as (
         select distinct
             SALESORDERID
@@ -70,29 +55,28 @@ with
             , chave_oferta_item_pedido.SPECIALOFFERID
             , chave_oferta_item_pedido.PRECO_UNITARIO
             , chave_oferta_item_pedido.DESCONTO_PERC
-            , pedidos_chave_cliente.REVISIONNUMBER
-            , pedidos_chave_cliente.DT_PEDIDO
-            , pedidos_chave_cliente.STATUS_PEDIDO
-            , pedidos_chave_cliente.CD_STATUS_PEDIDO
-            , pedidos_chave_cliente.TP_PEDIDO
-            , pedidos_chave_cliente.CD_TP_PEDIDO
-            , pedidos_chave_cliente.CUSTOMERID
+            , src_erp__SALESORDERHEADER.REVISIONNUMBER
+            , src_erp__SALESORDERHEADER.DT_PEDIDO
+            , src_erp__SALESORDERHEADER.STATUS_PEDIDO
+            , src_erp__SALESORDERHEADER.CD_STATUS_PEDIDO
+            , src_erp__SALESORDERHEADER.TP_PEDIDO
+            , src_erp__SALESORDERHEADER.CD_TP_PEDIDO
+            , src_erp__SALESORDERHEADER.CUSTOMERID
             , case
-                when pedidos_chave_cliente.SALESPERSONID is null then 0
-                else pedidos_chave_cliente.SALESPERSONID
+                when src_erp__SALESORDERHEADER.SALESPERSONID is null then 0
+                else src_erp__SALESORDERHEADER.SALESPERSONID
             end as SALESPERSONID
-            , pedidos_chave_cliente.TERRITORYID
-            , pedidos_chave_cliente.SHIPMETHODID
-            , pedidos_chave_cliente.ADDRESSID
+            , src_erp__SALESORDERHEADER.TERRITORYID
+            , src_erp__SALESORDERHEADER.SHIPMETHODID
+            , src_erp__SALESORDERHEADER.ADDRESSID
             , case
-                when pedidos_chave_cliente.CREDITCARDID is null then 0
-                else pedidos_chave_cliente.CREDITCARDID
+                when src_erp__SALESORDERHEADER.CREDITCARDID is null then 0
+                else src_erp__SALESORDERHEADER.CREDITCARDID
             end as CREDITCARDID
-            , pedidos_chave_cliente.CHECK_SUBTOTAL
-            , pedidos_chave_cliente.TAXAS
-            , pedidos_chave_cliente.FRETE
-            , pedidos_chave_cliente.CHECK_TOTAL_PEDIDO
-            , pedidos_chave_cliente.CHAVE_CLIENTE_CARTAO
+            , src_erp__SALESORDERHEADER.CHECK_SUBTOTAL
+            , src_erp__SALESORDERHEADER.TAXAS
+            , src_erp__SALESORDERHEADER.FRETE
+            , src_erp__SALESORDERHEADER.CHECK_TOTAL_PEDIDO
             , src_erp__SPECIALOFFER.DS_OFERTA
             , src_erp__SPECIALOFFER.DESCONTO_PERC
                 as DESCONTO_PERC_OFERTA
@@ -106,35 +90,27 @@ with
             , src_erp__SHIPMETHOD.FRETE_BASE
             , src_erp__SHIPMETHOD.TAXA_FRETE
             , tabela_qtd_itens_pedido.qtd_itens_pedido
-            , int_clientes.CD_PESSOA
-            , int_clientes.CD_LOJA
-            , int_clientes.CD_VENDEDOR_ATRIBUIDO
-            , int_clientes.TP_CLIENTE
         from chave_oferta_item_pedido
-        left join pedidos_chave_cliente
-        on chave_oferta_item_pedido.SALESORDERID = pedidos_chave_cliente.SALESORDERID
+        left join src_erp__SALESORDERHEADER
+        on chave_oferta_item_pedido.SALESORDERID = src_erp__SALESORDERHEADER.SALESORDERID
         left join chave_oferta_produto_tabela
         on chave_oferta_item_pedido.CHAVE_OFERTA_PRODUTO = chave_oferta_produto_tabela.CHAVE_OFERTA_PRODUTO
         left join src_erp__SPECIALOFFER
         on chave_oferta_item_pedido.SPECIALOFFERID = src_erp__SPECIALOFFER.SPECIALOFFERID
         left join src_erp__SHIPMETHOD
-        on pedidos_chave_cliente.SHIPMETHODID = src_erp__SHIPMETHOD.SHIPMETHODID 
-        left join int_clientes
-        on pedidos_chave_cliente.CHAVE_CLIENTE_CARTAO = int_clientes.chave_cliente_cartao
+        on src_erp__SALESORDERHEADER.SHIPMETHODID = src_erp__SHIPMETHOD.SHIPMETHODID 
         left join tabela_qtd_itens_pedido
-        on pedidos_chave_cliente.SALESORDERID = tabela_qtd_itens_pedido.SALESORDERID
+        on src_erp__SALESORDERHEADER.SALESORDERID = tabela_qtd_itens_pedido.SALESORDERID
     )
 
     , chaves_e_distribuicao_valores as (
         select
             hash(SALESORDERDETAILID)
                 as pk_item_pedido
-            , hash(concat(CUSTOMERID,'|',CREDITCARDID))
+            , hash(CUSTOMERID)
                 as fk_cliente
-            , case 
-                when TP_CLIENTE = 'Individual (varejo)' then hash(concat(CD_PESSOA,'|',ADDRESSID))
-                else hash(concat(CD_LOJA,'|',ADDRESSID))
-            end as fk_endereco
+            , hash(ADDRESSID)
+                as fk_endereco
             , hash(SALESORDERID)
                 as fk_pedido
             , hash(CREDITCARDID)
@@ -149,14 +125,8 @@ with
                 as cd_transportadora
             , CUSTOMERID
                 as cd_cliente
-            , CD_PESSOA
             , ADDRESSID
                 as cd_endereco
-            , CHAVE_CLIENTE_CARTAO
-            , case 
-                when TP_CLIENTE = 'Individual (varejo)' then concat(CD_PESSOA,'|',ADDRESSID)
-                else concat(CD_LOJA,'|',ADDRESSID)
-            end as chave_pessoa_endereco
             , CREDITCARDID
                 as cd_cartao
             , SALESPERSONID

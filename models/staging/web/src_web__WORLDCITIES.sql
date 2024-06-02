@@ -13,10 +13,29 @@ with
                 when CAPITAL = 'primary' then 'Capital do país'
                 else 'Cidade'
             end as tp_cidade
-            , cast(POPULATION as string) as POPULATION
             , cast(ID as int) as ID
         from {{ source('web', 'WORLDCITIES') }}
     )
 
+    , cidade_mais_atual as (
+        select
+            max(ID) as ID
+            , cidade
+            , nm_pais
+        from fonte_cidades_mundo
+        group by
+            cidade
+            , nm_pais
+    )
+
+    , tabela_completa as (
+        select
+            fonte_cidades_mundo.*
+        from fonte_cidades_mundo
+        inner join cidade_mais_atual
+        on fonte_cidades_mundo.ID = cidade_mais_atual.ID
+    )
+
 select *
-from fonte_cidades_mundo
+from tabela_completa
+where cidade = 'Miami'

@@ -65,9 +65,6 @@ models:
       - name: CD_CLIENTE
         description: Código do cliente (loja ou pessoa)
 
-      - name: CD_PESSOA
-        description: Código da pessoa (cliente)
-
       - name: CD_ENDERECO
         description: Código do endereço de entrega
 
@@ -85,12 +82,6 @@ models:
 
       - name: CD_ITEM_PEDIDO
         description: Código do item do pedido
-
-      - name: CHAVE_PESSOA_ENDERECO
-        description: Chave da pessoa com o seu respectivo endereço
-
-      - name: CHAVE_CLIENTE_CARTAO
-        description: Chave do cliente com o seu cartão de crédito, quando não há cartão no pedido é identificada com um zero
 
       - name: NUMERO_REVISAO
         description: Número da revisão do pedido
