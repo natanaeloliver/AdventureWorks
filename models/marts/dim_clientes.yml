@@ -24,3 +24,6 @@ models:
       - name: TP_CLIENTE
         description: Tipo de cliente
 
+      - name: NM_CLIENTE
+        description: Nome do cliente
+

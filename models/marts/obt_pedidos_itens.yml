@@ -78,6 +78,9 @@ models:
       - name: CD_ITEM_PEDIDO
         description: Código do item do pedido
 
+      - name: NM_CLIENTE
+        description: Nome do cliente
+
       - name: NUMERO_REVISAO
         description: Número da revisão do pedido
 
