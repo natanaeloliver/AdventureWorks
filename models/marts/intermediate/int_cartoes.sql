@@ -45,6 +45,22 @@ with
             , NM_PESSOA
                 as nm_pessoa_cartao
         from uniao_tabelas
+        union all
+        select
+            hash(0)
+                as pk_cartao
+            , 0
+                as cd_cartao
+            , 'Não cadastrado'
+                as NM_CARTAO
+            , null
+                as cd_pessoa_cartao
+            , null
+                as tp_pessoa_cartao
+            , null
+                as cd_tp_pessoa_cartao
+            , 'Não cadastrado'
+                as nm_pessoa_cartao
     )
 
 select *

@@ -15,10 +15,16 @@ with
                 when STATUS = 5 then 'Enviado'
                 when STATUS = 6 then 'Cancelado'
             end as status_pedido
+            , STATUS
+                as cd_status_pedido
             , case
                 when ONLINEORDERFLAG = True then 'Pedido feito pelo cliente'
                 when ONLINEORDERFLAG = False then 'Pedido feito pelo setor de vendas'
             end as tp_pedido
+            , case
+                when ONLINEORDERFLAG = True then 1
+                when ONLINEORDERFLAG = False then 0
+            end as cd_tp_pedido 
             , cast(CUSTOMERID as int)
                 as CUSTOMERID
             , cast(SALESPERSONID as int)

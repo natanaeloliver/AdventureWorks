@@ -17,6 +17,15 @@ with
     , src_erp__EMPLOYEEDEPARTMENTHISTORY as (
         select *
         from {{ ref('src_erp__EMPLOYEEDEPARTMENTHISTORY') }}
+        where
+            src_erp__EMPLOYEEDEPARTMENTHISTORY.DT_DEPARTAMENTO_FIM is null
+    )
+
+    , src_erp__SALESTERRITORYHISTORY as (
+        select *
+        from {{ ref('src_erp__SALESTERRITORYHISTORY') }}
+        where
+            src_erp__SALESTERRITORYHISTORY.DT_TERRITORIO_VENDA_FINAL is null
     )
 
     , src_erp__DEPARTMENT as (
@@ -69,9 +78,6 @@ with
         on src_erp__SALESPERSON.BUSINESSENTITYID = src_erp__SALESTERRITORYHISTORY.BUSINESSENTITYID
         left join src_erp__SHIFT
         on src_erp__EMPLOYEEDEPARTMENTHISTORY.SHIFTID = src_erp__SHIFT.SHIFTID
-        where
-            src_erp__EMPLOYEEDEPARTMENTHISTORY.DT_DEPARTAMENTO_FIM is null
-            and src_erp__SALESTERRITORYHISTORY.DT_TERRITORIO_VENDA_FINAL is null
     )
 
     , chaves as (
@@ -102,8 +108,34 @@ with
             , NIVEL_5
             , SN_ATIVO
         from uniao_tabelas
+        union all
+        select
+            hash(0) as pk_vendedor
+            , 0 as cd_entidade_negocio
+            , null as cd_departamento
+            , null as cd_tp_pessoa_vendedor
+            , null as cd_turno
+            , null as NM_GRUPO_DEPARTAMENTO
+            , null as NM_DEPARTAMENTO
+            , null as FUNCIONARIO_CARGO
+            , null as DS_TURNO
+            , null as TP_PESSOA
+            , 'Venda feita pelo cliente' as NM_PESSOA
+            , 0 as COMICAO_PERC
+            , false as SN_ASSALARIADO
+            , null as GENERO
+            , null as ESTADO_CIVIL
+            , 0 as META_VENDA
+            , 0 as BONUS_META
+            , null as DT_NASCIMENTO_FUNCIONARIO
+            , null as DT_CONTRATADO
+            , null as NIVEL_ORGANIZACIONAL
+            , null as NIVEL_2
+            , null as NIVEL_3
+            , null as NIVEL_4
+            , null as NIVEL_5
+            , true as SN_ATIVO
     )
 
 select *
 from chaves
-    

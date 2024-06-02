@@ -16,13 +16,17 @@ with
             , CD_TERRITORIO
             , CD_TRANSPORTADORA
             , CD_CLIENTE
+            , CD_PESSOA
             , CD_ENDERECO
+            , CHAVE_PESSOA_ENDERECO
+            , CHAVE_CLIENTE_CARTAO
+            , CD_CARTAO
             , CD_VENDEDOR
             , CD_OFERTA
-            , CD_CARTAO
             , CD_PEDIDO
+            , CD_TP_PEDIDO
+            , CD_STATUS_PEDIDO
             , CD_ITEM_PEDIDO
-            , CHAVE_PESSOA_ENDERECO
             , NUMERO_REVISAO
             , TP_PEDIDO
             , DT_PEDIDO
@@ -38,7 +42,7 @@ with
             , CHECK_SUBTOTAL_DISTRIBUIDO
             , TAXAS_DISTRIBUIDAS
             , TAXA_FRETE
-            , CHECK_FRETE
+            , CHECK_FRETE_DISTRIBUIDO
             , FRETE_BASE_DISTRIBUIDO
             , CHECK_TOTAL_PEDIDO_DISTRIBUIDO
             , DESCONTO_PERC_OFERTA

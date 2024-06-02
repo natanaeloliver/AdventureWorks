@@ -10,15 +10,12 @@ with
             , CD_CLIENTE
             , CD_LOJA
             , CD_PESSOA
-            , CD_TP_PESSOA
             , CD_ENTIDADE_NEGOCIO
             , CD_VENDEDOR_ATRIBUIDO
-            , NM_VENDEDOR_ATRIBUIDO
-            , NM_CLIENTE_LOJA
+            , CD_CARTAO
+            , CHAVE_CLIENTE_CARTAO
             , TP_CLIENTE
-            , NM_CLIENTE_PESSOA
-            , TP_PESSOA_CLIENTE
-            , TP_CONTATO
+            , NM_VENDEDOR_ATRIBUIDO
         from int_clientes
     )
 
