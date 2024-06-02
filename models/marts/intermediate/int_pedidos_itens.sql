@@ -111,8 +111,6 @@ with
                 as fk_cliente
             , hash(ADDRESSID)
                 as fk_endereco
-            , hash(SALESORDERID)
-                as fk_pedido
             , hash(CREDITCARDID)
                 as fk_cartao
             , hash(SALESPERSONID)
@@ -141,6 +139,12 @@ with
                 as cd_item_pedido
             , REVISIONNUMBER
                 as numero_revisao
+            , PRECO_UNITARIO * QTD_PRODUTO
+                as valor_negociado
+            , (PRECO_UNITARIO * QTD_PRODUTO)*(1-DESCONTO_PERC)
+                as valor_negociado_liquido
+            , (PRECO_UNITARIO * QTD_PRODUTO)*(1-DESCONTO_PERC)*(1+TAXA_FRETE)+(FRETE_BASE/QTD_ITENS_PEDIDO)
+                as valor_total_item
             , TP_PEDIDO
             , DT_PEDIDO
             , STATUS_PEDIDO

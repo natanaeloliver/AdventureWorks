@@ -9,7 +9,6 @@ with
             PK_ITEM_PEDIDO
             , FK_CLIENTE
             , FK_ENDERECO
-            , FK_PEDIDO
             , FK_CARTAO
             , FK_VENDEDOR
             , FK_PRODUTO
@@ -25,6 +24,9 @@ with
             , CD_STATUS_PEDIDO
             , CD_ITEM_PEDIDO
             , NUMERO_REVISAO
+            , VALOR_NEGOCIADO
+            , VALOR_NEGOCIADO_LIQUIDO
+            , VALOR_TOTAL_ITEM
             , TP_PEDIDO
             , DT_PEDIDO
             , STATUS_PEDIDO
