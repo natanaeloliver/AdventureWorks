@@ -14,8 +14,8 @@ models:
         tests:
           - not_null
           - relationships:
-              field: PK_PEDIDO
-              to: ref('fact_pedido')
+              field: FK_PEDIDO
+              to: ref('fact_pedidos_itens')
   
       - name: CHAVE_PEDIDO_MOTIVO_VENDA
         description: Chave com os códigos do pedido e do motivo de venda

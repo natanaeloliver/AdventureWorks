@@ -115,6 +115,8 @@ with
                 as fk_cartao
             , hash(SALESPERSONID)
                 as fk_vendedor
+            , hash(SALESORDERID)
+                as fk_pedido
             , hash(PRODUCTID)
                 as fk_produto
             , TERRITORYID

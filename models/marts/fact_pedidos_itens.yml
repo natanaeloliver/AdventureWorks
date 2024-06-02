@@ -48,6 +48,9 @@ models:
               field: PK_PRODUTO
               to: ref('dim_PRODUTO')
 
+      - name: FK_PEDIDO
+        description: Chave estrangeira dos pedidos, como não há uma dimensão dos pedidos, ela é utilizada somente para obter o motivo de compra
+
       - name: CD_TERRITORIO
         description: Código do território
 

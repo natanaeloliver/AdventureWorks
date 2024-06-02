@@ -11,6 +11,7 @@ with
             , FK_ENDERECO
             , FK_CARTAO
             , FK_VENDEDOR
+            , FK_PEDIDO
             , FK_PRODUTO
             , CD_TERRITORIO
             , CD_TRANSPORTADORA
