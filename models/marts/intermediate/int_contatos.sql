@@ -25,11 +25,6 @@ with
         from {{ ref('src_erp__PERSON') }}
     )
 
-    , src_erp__PERSONCREDITCARD as (
-        select *
-        from {{ ref('src_erp__PERSONCREDITCARD') }}
-    )
-
     , src_erp__STORE as (
         select *
         from {{ ref('src_erp__STORE') }}
@@ -50,10 +45,6 @@ with
                 as cd_tp_pessoa_contato
             , src_erp__PERSON.NM_PESSOA
                 as nm_contato
-            , case
-                when src_erp__PERSONCREDITCARD.CREDITCARDID is null then 0
-                else src_erp__PERSONCREDITCARD.CREDITCARDID
-            end as CREDITCARDID
         from src_erp__CUSTOMER
         left join src_erp__BUSINESSENTITYCONTACT
         on src_erp__CUSTOMER.CHAVE_LOJA_PESSOA = src_erp__BUSINESSENTITYCONTACT.CHAVE_LOJA_PESSOA
@@ -61,9 +52,8 @@ with
         on src_erp__BUSINESSENTITYCONTACT.CONTACTTYPEID = src_erp__CONTACTTYPE.CONTACTTYPEID
         left join src_erp__PERSON
         on src_erp__CUSTOMER.PERSONID = src_erp__PERSON.BUSINESSENTITYID
-        left join src_erp__PERSONCREDITCARD
-        on src_erp__CUSTOMER.STOREID = src_erp__PERSONCREDITCARD.BUSINESSENTITYID
-        where src_erp__CUSTOMER.CHAVE_LOJA_PESSOA is not null
+        where src_erp__CUSTOMER.PERSONID is not null
+        and src_erp__CUSTOMER.STOREID is not null
     )
 
     , contato_loja_empresa as (
@@ -79,10 +69,6 @@ with
             , 0 as cd_tp_pessoa_contato
             , src_erp__STORE.NM_LOJA
                 as nm_contato
-            , case
-                when src_erp__PERSONCREDITCARD.CREDITCARDID is null then 0
-                else src_erp__PERSONCREDITCARD.CREDITCARDID
-            end as CREDITCARDID
         from src_erp__CUSTOMER
         left join src_erp__BUSINESSENTITYCONTACT
         on src_erp__CUSTOMER.STOREID = src_erp__BUSINESSENTITYCONTACT.BUSINESSENTITYID
@@ -90,8 +76,6 @@ with
         on src_erp__BUSINESSENTITYCONTACT.CONTACTTYPEID = src_erp__CONTACTTYPE.CONTACTTYPEID
         left join src_erp__PERSON
         on src_erp__CUSTOMER.STOREID = src_erp__PERSON.BUSINESSENTITYID
-        left join src_erp__PERSONCREDITCARD
-        on src_erp__CUSTOMER.STOREID = src_erp__PERSONCREDITCARD.BUSINESSENTITYID
         left join src_erp__STORE
         on src_erp__CUSTOMER.STOREID = src_erp__STORE.BUSINESSENTITYID
         where src_erp__CUSTOMER.PERSONID is null
@@ -112,15 +96,9 @@ with
                 as cd_tp_pessoa_contato
             , src_erp__PERSON.NM_PESSOA
                 as nm_contato
-            , case
-                when src_erp__PERSONCREDITCARD.CREDITCARDID is null then 0
-                else src_erp__PERSONCREDITCARD.CREDITCARDID
-            end as CREDITCARDID
         from src_erp__CUSTOMER
         left join src_erp__PERSON
         on src_erp__CUSTOMER.PERSONID = src_erp__PERSON.BUSINESSENTITYID
-        left join src_erp__PERSONCREDITCARD
-        on src_erp__CUSTOMER.PERSONID = src_erp__PERSONCREDITCARD.BUSINESSENTITYID
         where src_erp__CUSTOMER.STOREID is null
     )
 
@@ -137,21 +115,23 @@ with
 
     , chaves as (
         select
-            hash(concat(CUSTOMERID,'|',PERSONID,'|',STOREID))
+            hash(concat(CUSTOMERID,'|',PERSONID,'|',STOREID,'|',CONTACTTYPEID))
                 as pk_contato
-            , hash(concat(CUSTOMERID,'|',CREDITCARDID))
+            , hash(CUSTOMERID)
                 as fk_cliente
             , TERRITORYID
+                as cd_territorio
             , CUSTOMERID
+                as cd_cliente
             , STOREID
+                as cd_loja
             , PERSONID
-            , CREDITCARDID
+                as cd_pessoa
             , CONTACTTYPEID
+                as cd_tp_contato
             , CHAVE_LOJA_PESSOA
-            , concat(CUSTOMERID,'|',PERSONID,'|',STOREID)
-                as chave_cliente_pessoa_loja
-            , concat(CUSTOMERID,'|',CREDITCARDID)
-                as chave_cliente_cartao
+            , concat(CUSTOMERID,'|',PERSONID,'|',STOREID,'|',CONTACTTYPEID)
+                as chave_cliente_pessoa_loja_tp_contato
             , TP_CONTATO
             , CD_TP_PESSOA_CONTATO
             , TP_PESSOA_CONTATO
