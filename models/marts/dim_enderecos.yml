@@ -1,0 +1,62 @@
+version: 2
+models:
+  - name: dim_endereco
+    description: Tabela dimensão dos endereços das entidades de negócio (pessoas) da Adventure Works.
+    columns:
+      - name: PK_ENDERECO
+        description: Chave primária da dimensão de endereços.
+        tests:
+          - unique
+          - not_null
+      
+      - name: FK_PESSOA
+        description: Chave primária da dimensão de endereços.
+        tests:
+          - not_null
+
+      - name: CD_PAIS
+        description: Código do país
+    
+      - name: CD_ESTADO
+        description: Código do estado
+    
+      - name: CD_TERRITORIO
+        description: Código do território
+    
+      - name: CD_CIDADE
+        description: Código da cidade
+    
+      - name: CD_TP_ENDERECO
+        description: Código do tipo de endereço
+    
+      - name: CD_ENDERECO
+        description: Código do endereço
+    
+      - name: CD_PESSOA
+        description: Código da pessoa
+
+      - name: NM_PAIS
+        description: Nome do país
+    
+      - name: NM_ESTADO
+        description: Nome do estado
+    
+      - name: CIDADE
+        description: Nome da cidade
+    
+      - name: TP_ENDERECO
+        description: Tipo do endereço
+    
+      - name: SN_PAIS_SEM_ESTADO
+        description: Identifica se é um país sem estado (Só cidades e o nome do país)
+    
+      - name: LATITUDE
+        description: Latitude da cidade
+    
+      - name: LONGITUDE
+        description: Longitude da cidade
+    
+      - name: TP_CIDADE
+        description: Tipo de cidade, entre cidade comum, capital do estado e capital do país
+    
+    

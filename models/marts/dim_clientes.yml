@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: dim_clientes
+    description: Tabela dimensão dos clientes da Adventure Works.
+    columns:
+      - name: PK_CLIENTE
+        description: Chave primária da dimensão de clientes.
+        tests:
+          - unique
+          - not_null
+
+      - name: CD_CLIENTE
+        description: Código do cliente
+
+      - name: CD_LOJA
+        description: Código da loja
+
+      - name: CD_VENDEDOR_ATRIBUIDO
+        description: Código do vendedor atribuído ao cliente
+
+      - name: NM_VENDEDOR_ATRIBUIDO
+        description: Nome do vendedor atribuído ao cliente
+
+      - name: TP_CLIENTE
+        description: Tipo de cliente
+

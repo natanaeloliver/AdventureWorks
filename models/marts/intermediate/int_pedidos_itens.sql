@@ -24,16 +24,6 @@ with
         from {{ ref('src_erp__SHIPMETHOD') }}
     )
 
-    , int_clientes as (
-        select 
-                pk_cliente
-                    as fk_cliente
-                , fk_endereco
-                , cd_cliente
-                , cd_endereco
-        from {{ ref('int_clientes') }}
-    )
-
     , tabela_qtd_itens_pedido as (
         select distinct
             SALESORDERID
@@ -68,12 +58,21 @@ with
             , src_erp__SALESORDERHEADER.REVISIONNUMBER
             , src_erp__SALESORDERHEADER.DT_PEDIDO
             , src_erp__SALESORDERHEADER.STATUS_PEDIDO
+            , src_erp__SALESORDERHEADER.CD_STATUS_PEDIDO
             , src_erp__SALESORDERHEADER.TP_PEDIDO
+            , src_erp__SALESORDERHEADER.CD_TP_PEDIDO
             , src_erp__SALESORDERHEADER.CUSTOMERID
-            , src_erp__SALESORDERHEADER.SALESPERSONID
+            , case
+                when src_erp__SALESORDERHEADER.SALESPERSONID is null then 0
+                else src_erp__SALESORDERHEADER.SALESPERSONID
+            end as SALESPERSONID
             , src_erp__SALESORDERHEADER.TERRITORYID
             , src_erp__SALESORDERHEADER.SHIPMETHODID
-            , src_erp__SALESORDERHEADER.CREDITCARDID
+            , src_erp__SALESORDERHEADER.ADDRESSID
+            , case
+                when src_erp__SALESORDERHEADER.CREDITCARDID is null then 0
+                else src_erp__SALESORDERHEADER.CREDITCARDID
+            end as CREDITCARDID
             , src_erp__SALESORDERHEADER.CHECK_SUBTOTAL
             , src_erp__SALESORDERHEADER.TAXAS
             , src_erp__SALESORDERHEADER.FRETE
@@ -90,9 +89,6 @@ with
             , src_erp__SHIPMETHOD.NM_TRANSPORTADORA
             , src_erp__SHIPMETHOD.FRETE_BASE
             , src_erp__SHIPMETHOD.TAXA_FRETE
-            , int_clientes.fk_cliente
-            , int_clientes.fk_endereco
-            , int_clientes.cd_endereco
             , tabela_qtd_itens_pedido.qtd_itens_pedido
         from chave_oferta_item_pedido
         left join src_erp__SALESORDERHEADER
@@ -103,8 +99,6 @@ with
         on chave_oferta_item_pedido.SPECIALOFFERID = src_erp__SPECIALOFFER.SPECIALOFFERID
         left join src_erp__SHIPMETHOD
         on src_erp__SALESORDERHEADER.SHIPMETHODID = src_erp__SHIPMETHOD.SHIPMETHODID 
-        left join int_clientes
-        on src_erp__SALESORDERHEADER.CUSTOMERID = int_clientes.cd_cliente
         left join tabela_qtd_itens_pedido
         on src_erp__SALESORDERHEADER.SALESORDERID = tabela_qtd_itens_pedido.SALESORDERID
     )
@@ -113,14 +107,16 @@ with
         select
             hash(SALESORDERDETAILID)
                 as pk_item_pedido
-            , FK_CLIENTE
-            , FK_ENDERECO
-            , hash(SALESORDERID)
-                as fk_pedido
+            , hash(CUSTOMERID)
+                as fk_cliente
+            , hash(ADDRESSID)
+                as fk_endereco
             , hash(CREDITCARDID)
                 as fk_cartao
             , hash(SALESPERSONID)
                 as fk_vendedor
+            , hash(SALESORDERID)
+                as fk_pedido
             , hash(PRODUCTID)
                 as fk_produto
             , TERRITORYID
@@ -129,23 +125,33 @@ with
                 as cd_transportadora
             , CUSTOMERID
                 as cd_cliente
-            , CD_ENDERECO
+            , ADDRESSID
+                as cd_endereco
+            , CREDITCARDID
+                as cd_cartao
             , SALESPERSONID
                 as cd_vendedor
             , SPECIALOFFERID
                 as cd_oferta
-            , CREDITCARDID
-                as cd_cartao
             , SALESORDERID
                 as cd_pedido
+            , CD_TP_PEDIDO
+            , CD_STATUS_PEDIDO
             , SALESORDERDETAILID
                 as cd_item_pedido
             , REVISIONNUMBER
                 as numero_revisao
+            , PRECO_UNITARIO * QTD_PRODUTO
+                as valor_negociado
+            , (PRECO_UNITARIO * QTD_PRODUTO)*(1-DESCONTO_PERC)
+                as valor_negociado_liquido
+            , (PRECO_UNITARIO * QTD_PRODUTO)*(1-DESCONTO_PERC)*(1+TAXA_FRETE)+(FRETE_BASE/QTD_ITENS_PEDIDO)
+                as valor_total_item
             , TP_PEDIDO
             , DT_PEDIDO
             , STATUS_PEDIDO
             , PRODUCTID
+                as cd_produto_num
             , PRECO_UNITARIO
             , QTD_PRODUTO
             , DESCONTO_PERC
@@ -159,7 +165,7 @@ with
                 as taxas_distribuidas
             , TAXA_FRETE
             , FRETE/QTD_ITENS_PEDIDO
-                as check_frete
+                as check_frete_distribuido
             , FRETE_BASE/QTD_ITENS_PEDIDO
                 as frete_base_distribuido
             , CHECK_TOTAL_PEDIDO/QTD_ITENS_PEDIDO

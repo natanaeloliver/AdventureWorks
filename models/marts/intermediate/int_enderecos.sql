@@ -34,13 +34,12 @@ with
         from {{ ref('src_web__CIDADES_FALTANTES') }}
     )
 
-    , chave_cidades_web as (
+     , chave_cidades_web as (
         select
             concat(upper(ISO2),'|',upper(translate(CIDADE_ASCII,'áéíóúâêôãõüçàèìòù','aeiouaeoaoucaeiou'))) as cd_cidade
             , LATITUDE
             , LONGITUDE
             , TP_CIDADE
-            , POPULATION
         from src_web__WORLDCITIES
         union all
         select
@@ -51,7 +50,6 @@ with
                 when CIDADE = 'QUEBEC' then 'Capital do país'
                 else 'Cidade'
             end as TP_CIDADE
-            , null POPULATION
         from src_web__CIDADES_FALTANTES
     )
 
@@ -66,6 +64,7 @@ with
             , src_erp__STATEPROVINCE.TERRITORYID
             , src_erp__COUNTRYREGION.NM_PAIS
             , src_erp__BUSINESSENTITYADDRESS.ADDRESSTYPEID
+            , src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
             , src_erp__ADDRESSTYPE.TP_ENDERECO
         from src_epr__ADDRESS
         left join src_erp__STATEPROVINCE
@@ -82,6 +81,8 @@ with
         select
             hash(ADDRESSID)
                 as pk_endereco
+            , hash(BUSINESSENTITYID)
+                as fk_pessoa
             , COUNTRYREGIONCODE
                 as cd_pais
             , CD_ESTADO
@@ -93,6 +94,8 @@ with
                 as cd_tp_endereco
             , ADDRESSID
                 as cd_endereco
+            , BUSINESSENTITYID
+                as cd_pessoa
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
@@ -104,12 +107,14 @@ with
     , tabela_com_lat_lng as (
         select
             chaves.PK_ENDERECO
+            , chaves.FK_PESSOA
             , chaves.CD_PAIS
             , chaves.CD_ESTADO
             , chaves.CD_TERRITORIO
             , chaves.CD_CIDADE
             , chaves.CD_TP_ENDERECO
             , chaves.CD_ENDERECO
+            , chaves.CD_PESSOA
             , chaves.NM_PAIS
             , chaves.NM_ESTADO
             , chaves.CIDADE
@@ -118,7 +123,6 @@ with
             , chave_cidades_web.LATITUDE
             , chave_cidades_web.LONGITUDE
             , chave_cidades_web.TP_CIDADE
-            , chave_cidades_web.POPULATION
         from chaves
         left join chave_cidades_web
         on chaves.cd_cidade = chave_cidades_web.cd_cidade
@@ -126,4 +130,3 @@ with
 
 select *
 from tabela_com_lat_lng
-

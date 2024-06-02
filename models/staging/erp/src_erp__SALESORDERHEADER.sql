@@ -15,10 +15,16 @@ with
                 when STATUS = 5 then 'Enviado'
                 when STATUS = 6 then 'Cancelado'
             end as status_pedido
+            , STATUS
+                as cd_status_pedido
             , case
                 when ONLINEORDERFLAG = True then 'Pedido feito pelo cliente'
                 when ONLINEORDERFLAG = False then 'Pedido feito pelo setor de vendas'
             end as tp_pedido
+            , case
+                when ONLINEORDERFLAG = True then 1
+                when ONLINEORDERFLAG = False then 0
+            end as cd_tp_pedido 
             , cast(CUSTOMERID as int)
                 as CUSTOMERID
             , cast(SALESPERSONID as int)
@@ -29,6 +35,8 @@ with
                 as SHIPMETHODID
             , cast(CREDITCARDID as int)
                 as CREDITCARDID
+            , cast(SHIPTOADDRESSID as int)
+                as ADDRESSID
             , cast(SUBTOTAL as numeric(18,2))
                 as check_subtotal
             , cast(TAXAMT as numeric(18,2))

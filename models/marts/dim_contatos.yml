@@ -1,0 +1,50 @@
+version: 2
+models:
+  - name: dim_contatos
+    description: Tabela dimensão dos contatos da Adventure Works.
+    columns:
+      - name: PK_CONTATO
+        description: Chave primária da dimensão dos contatos.
+        tests:
+          - unique
+          - not_null
+
+      - name: FK_CLIENTE
+        description: Chave estrangeira da dimensão dos clientes.
+        tests:
+          - relationships:
+              field: PK_CLIENTE
+              to: ref('dim_clientes')
+
+      - name: CD_TERRITORIO
+        description: Código do território
+
+      - name: CD_CLIENTE
+        description: Código do cliente
+
+      - name: CD_LOJA
+        description: Código da loja
+
+      - name: CD_PESSOA
+        description: Código da pessoa
+
+      - name: CD_TP_CONTATO 
+        description: Código do tipo de contato
+
+      - name: CHAVE_LOJA_PESSOA
+        description: Chave do código da loja com o código da pessoa
+
+      - name: CHAVE_CLIENTE_PESSOA_LOJA_TP_CONTATO
+        description: Chave do código do cliente com código da loja, da pessoa e do tipo de contato
+
+      - name: TP_CONTATO
+        description: Tipo de contato
+
+      - name: CD_TP_PESSOA_CONTATO
+        description: Código do tipo de contato
+
+      - name: TP_PESSOA_CONTATO
+        description: Tipo de pessoa do contato
+
+      - name: NM_CONTATO
+        description: Nome do contato

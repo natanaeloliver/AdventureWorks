@@ -17,7 +17,7 @@ with
     , uniao_tabelas as (
         select
             src_erp__CREDITCARD.CREDITCARDID
-            , src_erp__CREDITCARD.TP_CARTAO
+            , src_erp__CREDITCARD.NM_CARTAO
             , src_erp__PERSONCREDITCARD.BUSINESSENTITYID
             , src_erp__PERSON.TP_PESSOA
             , src_erp__PERSON.CD_TP_PESSOA
@@ -35,7 +35,7 @@ with
                 as pk_cartao
             , CREDITCARDID
                 as cd_cartao
-            , TP_CARTAO
+            , NM_CARTAO
             , BUSINESSENTITYID
                 as cd_pessoa_cartao
             , TP_PESSOA
@@ -45,6 +45,22 @@ with
             , NM_PESSOA
                 as nm_pessoa_cartao
         from uniao_tabelas
+        union all
+        select
+            hash(0)
+                as pk_cartao
+            , 0
+                as cd_cartao
+            , 'Não cadastrado'
+                as NM_CARTAO
+            , null
+                as cd_pessoa_cartao
+            , null
+                as tp_pessoa_cartao
+            , null
+                as cd_tp_pessoa_cartao
+            , 'Não cadastrado'
+                as nm_pessoa_cartao
     )
 
 select *

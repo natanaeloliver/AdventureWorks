@@ -1,0 +1,37 @@
+version: 2
+models:
+  - name: dim_vendedores
+    description: Tabela dimensão com os vendedores da Adventure Works.
+    columns:
+      - name: PK_VENDEDOR
+        description: Chave primária da dimensão dos vendedores
+        tests:
+          - unique
+          - not_null
+      
+      - name: CD_ENTIDADE_NEGOCIO
+        description: Código da entidade de negócio (pessoa)
+
+      - name: CD_DEPARTAMENTO
+        description: Código do departamento
+
+      - name: CD_TP_PESSOA_VENDEDOR
+        description: Tipo de pessoa do vendedor
+
+      - name: CD_TURNO
+        description: Código do turno do vendedor
+
+      - name: NM_GRUPO_DEPARTAMENTO
+        description: Nome do grupo do departamento vendedor
+
+      - name: NM_DEPARTAMENTO
+        description: Nome do departamento do vendedor
+
+      - name: FUNCIONARIO_CARGO
+        description: Cargo do vendedor
+
+      - name: DS_TURNO
+        description: Descrição do turno do vendedor
+
+      - name: TP_PESSOA
+        description: Tipo de pessoa do vendedor

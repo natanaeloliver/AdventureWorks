@@ -5,13 +5,13 @@ with
                 as SALESORDERID
             , cast(SALESORDERDETAILID as int)
                 as SALESORDERDETAILID
-            , cast(ORDERQTY as int)
+            , cast(ORDERQTY as numeric(18,2))
                 as qtd_produto
             , cast(PRODUCTID as int)
                 as PRODUCTID
             , cast(SPECIALOFFERID as int)
                 as SPECIALOFFERID
-            , cast(UNITPRICE as numeric(18,2))
+            , cast(UNITPRICE as numeric(18,4))
                 as preco_unitario
             , cast(UNITPRICEDISCOUNT as numeric(18,2))
                 as desconto_perc
