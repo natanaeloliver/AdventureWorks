@@ -1,5 +1,8 @@
 # AdventureWorks
 Repositório utilizado para a Certificação Analytics Engineer by Indicium
+
+[Link do dashboard criado](https://app.powerbi.com/view?r=eyJrIjoiZTU5NmY1NWYtZjIxZi00ODhhLThlZGYtZTdmOWZkZmZmOTY1IiwidCI6ImIwNzVmYzFkLWRkZDYtNDQ5Yy04ZTYxLWYzODg2MzgzOTcwMCJ9&pageName=ReportSection)
+
 ## Objetivos
 ### 1 - Diagrama conceitual do data warehouse em formato PDF
 Um modelo conceitual com as tabelas de fatos e dimensões necessárias para responder
@@ -46,3 +49,5 @@ Considere as informações que você obteve nos diagnósticos iniciais e que est
 Em especial, leve em consideração os objetivos esperados, partes interessadas e riscos/contingências do projeto.
 Além disso, que outros valores podemos obter em projetos de infraestrutura de dados? Há outros riscos e
 contingências que você pense ser relevante incluir no planejamento do projeto.
+
+
