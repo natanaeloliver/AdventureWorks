@@ -27,6 +27,12 @@ models:
       - name: NM_DEPARTAMENTO
         description: Nome do departamento do vendedor
 
+      - name: NM_VENDEDOR
+        description: Nome do vendedor
+
+      - name: SENIORIDADE
+        description: Tempo de trabalho em anos
+
       - name: FUNCIONARIO_CARGO
         description: Cargo do vendedor
 

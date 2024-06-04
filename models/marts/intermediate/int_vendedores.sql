@@ -53,6 +53,7 @@ with
             , src_erp__EMPLOYEE.ESTADO_CIVIL
             , src_erp__EMPLOYEE.GENERO
             , src_erp__EMPLOYEE.DT_CONTRATADO
+            , datediff(YEAR,src_erp__EMPLOYEE.DT_CONTRATADO,current_date()) as senioridade
             , src_erp__EMPLOYEE.SN_ASSALARIADO
             , src_erp__EMPLOYEE.SN_ATIVO
             , src_erp__EMPLOYEE.NIVEL_ORGANIZACIONAL
@@ -93,7 +94,9 @@ with
             , DS_TURNO
             , TP_PESSOA
             , NM_PESSOA
+                AS NM_VENDEDOR
             , COMICAO_PERC
+            , SENIORIDADE
             , SN_ASSALARIADO
             , GENERO
             , ESTADO_CIVIL
@@ -120,8 +123,9 @@ with
             , null as FUNCIONARIO_CARGO
             , null as DS_TURNO
             , null as TP_PESSOA
-            , 'Venda feita pelo cliente' as NM_PESSOA
+            , 'Venda feita pelo cliente' as NM_VENDEDOR
             , 0 as COMICAO_PERC
+            , null as SENIORIDADE
             , false as SN_ASSALARIADO
             , null as GENERO
             , null as ESTADO_CIVIL

@@ -13,6 +13,8 @@ with
             , CD_TURNO
             , NM_GRUPO_DEPARTAMENTO
             , NM_DEPARTAMENTO
+            , NM_VENDEDOR
+            , SENIORIDADE
             , FUNCIONARIO_CARGO
             , DS_TURNO
             , TP_PESSOA
