@@ -1,5 +1,6 @@
 # AdventureWorks
 Repositório utilizado para a Certificação Analytics Engineer by Indicium
+
 [Link do dashboard criado](https://app.powerbi.com/view?r=eyJrIjoiZTU5NmY1NWYtZjIxZi00ODhhLThlZGYtZTdmOWZkZmZmOTY1IiwidCI6ImIwNzVmYzFkLWRkZDYtNDQ5Yy04ZTYxLWYzODg2MzgzOTcwMCJ9&pageName=ReportSection)
 
 ## Objetivos
