@@ -8,5 +8,15 @@ sources:
     tables:
       - name: WORLDCITIES
         description: Tabela das cidades do mundo (fonte https://simplemaps.com/data/world-cities)
+        columns:
+          - name: ID
+            description: Chave primária das cidades do site simplemaps
+            tests:
+              - not_null
       - name: CIDADES_FALTANTES
         description: Tabela das cidades do mundo faltantes (ChatGBT)
+        columns:
+          - name: CD_CIDADE
+            description: Chave primária das cidades da planilha
+            tests:
+              - not_null

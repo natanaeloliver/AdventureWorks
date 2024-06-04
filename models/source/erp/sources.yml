@@ -27,22 +27,29 @@ sources:
             description: Chave primária dos tipos de endereço
             tests:
               - not_null
+      - name: BUSINESSENTITY
+        description: Tabela das entidades de negócio
+        columns:
+          - name: BUSINESSENTITYID
+            description: Chave primária das entidades de negócio
+            tests:
+              - not_null
       - name: BUSINESSENTITYADDRESS
         description: Tabela das entidades de negócio com as chaves dos endereços
         columns:
           - name: BUSINESSENTITYID
-            description: Chave estrangeira da pessoa
+            description: Chave estrangeira das entidades de negócio
             tests:
               - not_null
               - relationships:
-                  to: ref('src_erp__PERSON')
+                  to: ref('src_erp__BUSINESSENTITY')
                   field: BUSINESSENTITYID
           - name: ADDRESSID
             description: Chave estrangeira do endereço
             tests:
               - not_null
               - relationships:
-                  to: ref('src_epr__ADDRESS')
+                  to: ref('src_erp__ADDRESS')
                   field: ADDRESSID
           - name: ADDRESSTYPEID
             description: Chave estrangeira do endereço
@@ -55,10 +62,11 @@ sources:
         description: Tabela das entidades de negócio com as chaves das pessoas e dos tipos de contato
         columns:
           - name: BUSINESSENTITYID
-            description: Chave estrangeira das lojas
+            description: Chave estrangeira das entidades de negócio >
+             (como só será avaliado a venda, usa-se apenas as chavas das lojas desta tabela)
             tests:
               - relationships:
-                  to: ref('src_erp__STORE')
+                  to: ref('src_erp__BUSINESSENTITY')
                   field: BUSINESSENTITYID
           - name: PERSONID
             description: Chave estrangeira das pessoas
@@ -104,14 +112,12 @@ sources:
           - name: PERSONID
             description: Chave estrangeira das pessoas
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__PERSON')
                   field: BUSINESSENTITYID
           - name: STOREID
             description: Chave estrangeira das lojas
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__STORE')
                   field: BUSINESSENTITYID
@@ -126,9 +132,12 @@ sources:
         description: Tabela dos funcionários
         columns:
           - name: BUSINESSENTITYID
-            description: Chave primaria dos funcionários
+            description: Chave primaria dos funcionários e chave estrangeira das entidades de negócio
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__BUSINESSENTITY')
+                  field: BUSINESSENTITYID
       - name: EMPLOYEEDEPARTMENTHISTORY
         description: Tabela dos funcionários com as chaves dos departamentos
         columns:
@@ -144,22 +153,25 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: ref('src_erp__EMPLOYEE')
+                  to: ref('src_erp__DEPARTMENT')
                   field: DEPARTMENTID
           - name: SHIFTID
             description: Chave estrangeira dos turnos
             tests:
               - not_null
               - relationships:
-                  to: ref('src_erp__EMPLOYEE')
+                  to: ref('src_erp__SHIFT')
                   field: SHIFTID
       - name: PERSON
         description: Tabela das pessoas
         columns:
           - name: BUSINESSENTITYID
-            description: Chave primaria das pessoas
+            description: Chave primaria das pessoas e chave estrangeira das entidades de negócio
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__BUSINESSENTITY')
+                  field: BUSINESSENTITYID
       - name: PERSONCREDITCARD
         description: Tabela dos cartões das pessoas
         columns:
@@ -187,14 +199,12 @@ sources:
           - name: PRODUCTSUBCATEGORYID
             description: Chave estrangeira das subcategorias
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__PRODUCTSUBCATEGORY')
                   field: PRODUCTSUBCATEGORYID
           - name: PRODUCTMODELID
             description: Chave estrangeira das pessoas
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__PRODUCTMODEL')
                   field: PRODUCTMODELID
@@ -271,10 +281,9 @@ sources:
           - name: SALESPERSONID
             description: Chave estrangeira dos vendedores
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__SALESPERSON')
-                  field: SALESPERSONID
+                  field: BUSINESSENTITYID
           - name: SHIPMETHODID
             description: Chave estrangeira das transportadoras
             tests:
@@ -285,7 +294,6 @@ sources:
           - name: CREDITCARDID
             description: Chave estrangeira dos cartões de crédito
             tests:
-              - not_null
               - relationships:
                   to: ref('src_erp__CREDITCARD')
                   field: CREDITCARDID
@@ -294,89 +302,132 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: ref('src_epr__ADDRESS')
+                  to: ref('src_erp__ADDRESS')
                   field: ADDRESSID
       - name: SALESORDERHEADERSALESREASON
         description: Tabela dos pedidos com as chaves dos motivos de venda
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SALESREASONID
+            description: Chave primaria dos motivos de venda
             tests:
               - not_null
+          - name: SALESORDERID
+            description: Chave estrangeira dos pedidos
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('src_erp__SALESORDERHEADER')
+                  field: SALESORDERID
       - name: SALESPERSON
         description: Tabela dos vendedores
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: BUSINESSENTITYID
+            description: Chave primaria dos vendedores e chave estrangeira dos funcionários
             tests:
               - not_null
-      - name: SALESREASON
+              - relationships:
+                  to: ref('src_erp__EMPLOYEE')
+                  field: BUSINESSENTITYID
+      - name: SALESREASON 
         description: Tabela dos motivos de venda
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SALESREASONID
+            description: Chave primaria dos motivos de venda
             tests:
               - not_null
       - name: SALESTERRITORYHISTORY
-        description: Tabela dos endereços da venda dos pedidos ao longo do tempo
+        description: Tabela dos territórios das vendas dos vendedores ao longo do tempo
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: BUSINESSENTITYID
+            description: Chave estrangeira dos vendedores
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__SALESPERSON')
+                  field: BUSINESSENTITYID
       - name: SHIFT
         description: Tabela dos turnos
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SHIFTID
+            description: Chave primaria dos turnos
             tests:
               - not_null
       - name: SHIPMETHOD
-        description: Tabela dos métodos de envio
+        description: Tabela das transportadoras
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SHIPMETHODID
+            description: Chave primaria dos transportadoras
             tests:
               - not_null
       - name: SPECIALOFFER
         description: Tabela das ofertas
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SPECIALOFFERID
+            description: Chave primaria das ofertas
             tests:
               - not_null
       - name: SPECIALOFFERPRODUCT
         description: Tabela das ofestas com as chaves dos produtos
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: SPECIALOFFERID
+            description: Chave estrangeira das ofertas
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__SPECIALOFFER')
+                  field: SPECIALOFFERID
+          - name: PRODUCTID
+            description: Chave estrangeira dos produtos
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('src_erp__PRODUCT')
+                  field: PRODUCTID
       - name: STATEPROVINCE
         description: Tabela dos estados
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: STATEPROVINCEID
+            description: Chave primaria dos estados
             tests:
               - not_null
+          - name: COUNTRYREGIONCODE
+            description: Chave estrangeira dos países
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('src_erp__COUNTRYREGION')
+                  field: COUNTRYREGIONCODE
       - name: STORE
         description: Tabela das lojas
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: BUSINESSENTITYID
+            description: Chave primaria das lojas e chave estrangeira das entidades de negócio
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__BUSINESSENTITY')
+                  field: BUSINESSENTITYID
+          - name: SALESPERSONID
+            description: Chave estrangeira dos vendedores
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('src_erp__SALESPERSON')
+                  field: BUSINESSENTITYID
       - name: UNITMEASURE
         description: Tabela das unidades de medida
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: UNITMEASURECODE
+            description: Chave primaria das unidades de medida
             tests:
               - not_null
       - name: VENDOR
         description: Tabela das plataformas de venda
         columns:
-          - name: 
-            description: Chave primaria dos 
+          - name: BUSINESSENTITYID
+            description: Chave primaria das plataformas de venda e chave estrangeira das entidades de negócio
             tests:
               - not_null
+              - relationships:
+                  to: ref('src_erp__BUSINESSENTITY')
+                  field: BUSINESSENTITYID

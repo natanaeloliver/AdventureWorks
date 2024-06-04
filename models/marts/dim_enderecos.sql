@@ -7,14 +7,13 @@ with
     , tabela as (
         select
             PK_ENDERECO
-            , FK_PESSOA
             , CD_PAIS
             , CD_ESTADO
             , CD_TERRITORIO
             , CD_CIDADE
             , CD_TP_ENDERECO
             , CD_ENDERECO
-            , CD_PESSOA
+            , CD_ENTIDADE_NEGOCIO
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
