@@ -13,6 +13,7 @@ with
             , CD_VENDEDOR_ATRIBUIDO
             , TP_CLIENTE
             , NM_VENDEDOR_ATRIBUIDO
+            , NM_CLIENTE
         from int_clientes
     )
 

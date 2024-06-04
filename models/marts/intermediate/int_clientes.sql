@@ -115,6 +115,7 @@ with
             , CD_VENDEDOR_ATRIBUIDO
             , TP_CLIENTE
             , NM_VENDEDOR_ATRIBUIDO
+            , NM_LOJA as nm_cliente
         from uniao_tabelas
     )
 select *

@@ -85,6 +85,7 @@ with
             , dim_clientes.CD_VENDEDOR_ATRIBUIDO
             , dim_clientes.TP_CLIENTE
             , dim_clientes.NM_VENDEDOR_ATRIBUIDO
+            , dim_clientes.NM_CLIENTE
             , dim_enderecos.CD_PAIS
             , dim_enderecos.CD_ESTADO
             , dim_enderecos.CD_TERRITORIO

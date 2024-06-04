@@ -9,11 +9,6 @@ models:
           - unique
           - not_null
       
-      - name: FK_PESSOA
-        description: Chave primária da dimensão de endereços.
-        tests:
-          - not_null
-
       - name: CD_PAIS
         description: Código do país
     
@@ -32,8 +27,8 @@ models:
       - name: CD_ENDERECO
         description: Código do endereço
     
-      - name: CD_PESSOA
-        description: Código da pessoa
+      - name: CD_ENTIDADE_NEGOCIO
+        description: Código da entidade de negócio
 
       - name: NM_PAIS
         description: Nome do país

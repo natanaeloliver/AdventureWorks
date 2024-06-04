@@ -1,7 +1,7 @@
 with
-    src_epr__ADDRESS as (
+    src_erp__ADDRESS as (
         select *
-        from {{ ref('src_epr__ADDRESS') }}
+        from {{ ref('src_erp__ADDRESS') }}
     )
 
     , src_erp__BUSINESSENTITYADDRESS as (
@@ -55,8 +55,8 @@ with
 
     , uniao_tabelas as (
         select
-            src_epr__ADDRESS.ADDRESSID
-            , src_epr__ADDRESS.CIDADE
+            src_erp__ADDRESS.ADDRESSID
+            , src_erp__ADDRESS.CIDADE
             , src_erp__STATEPROVINCE.CD_ESTADO
             , src_erp__STATEPROVINCE.COUNTRYREGIONCODE
             , src_erp__STATEPROVINCE.SN_PAIS_SEM_ESTADO
@@ -66,13 +66,13 @@ with
             , src_erp__BUSINESSENTITYADDRESS.ADDRESSTYPEID
             , src_erp__BUSINESSENTITYADDRESS.BUSINESSENTITYID
             , src_erp__ADDRESSTYPE.TP_ENDERECO
-        from src_epr__ADDRESS
+        from src_erp__ADDRESS
         left join src_erp__STATEPROVINCE
-        on src_epr__ADDRESS.STATEPROVINCEID = src_erp__STATEPROVINCE.STATEPROVINCEID
+        on src_erp__ADDRESS.STATEPROVINCEID = src_erp__STATEPROVINCE.STATEPROVINCEID
         left join src_erp__COUNTRYREGION
         on src_erp__STATEPROVINCE.COUNTRYREGIONCODE = src_erp__COUNTRYREGION.COUNTRYREGIONCODE
         left join src_erp__BUSINESSENTITYADDRESS
-        on src_epr__ADDRESS.ADDRESSID = src_erp__BUSINESSENTITYADDRESS.ADDRESSID
+        on src_erp__ADDRESS.ADDRESSID = src_erp__BUSINESSENTITYADDRESS.ADDRESSID
         left join src_erp__ADDRESSTYPE
         on src_erp__BUSINESSENTITYADDRESS.ADDRESSTYPEID = src_erp__ADDRESSTYPE.ADDRESSTYPEID
     )
@@ -81,8 +81,6 @@ with
         select
             hash(ADDRESSID)
                 as pk_endereco
-            , hash(BUSINESSENTITYID)
-                as fk_pessoa
             , COUNTRYREGIONCODE
                 as cd_pais
             , CD_ESTADO
@@ -95,7 +93,7 @@ with
             , ADDRESSID
                 as cd_endereco
             , BUSINESSENTITYID
-                as cd_pessoa
+                as cd_entidade_negocio
             , NM_PAIS
             , NM_ESTADO
             , CIDADE
@@ -107,14 +105,13 @@ with
     , tabela_com_lat_lng as (
         select
             chaves.PK_ENDERECO
-            , chaves.FK_PESSOA
             , chaves.CD_PAIS
             , chaves.CD_ESTADO
             , chaves.CD_TERRITORIO
             , chaves.CD_CIDADE
             , chaves.CD_TP_ENDERECO
             , chaves.CD_ENDERECO
-            , chaves.CD_PESSOA
+            , chaves.CD_ENTIDADE_NEGOCIO
             , chaves.NM_PAIS
             , chaves.NM_ESTADO
             , chaves.CIDADE
